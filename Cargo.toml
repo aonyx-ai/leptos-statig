@@ -1,0 +1,20 @@
+[package]
+name = "leptos-statig"
+version = "0.1.0"
+edition = "2024"
+
+description = "Reactive wrapper for statig state machines in Leptos"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/aonyx-ai/leptos-statig.git"
+keywords = ["leptos", "statig", "fsm", "state-machine", "reactive"]
+categories = ["gui", "wasm", "web-programming"]
+
+# Leptos 0.8.5 requires Rust 1.88 or later
+rust-version = "1.88"
+
+[dependencies]
+leptos = ">=0.8.3"
+statig = ">=0.3.0"
+
+[dev-dependencies]
+wasm-bindgen-test = "0.3.0"

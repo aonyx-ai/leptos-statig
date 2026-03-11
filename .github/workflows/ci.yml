@@ -1,0 +1,95 @@
+---
+name: Continuous Integration
+
+"on":
+  pull_request:
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: "ci-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  targets:
+    name: Enumerate Just recipes
+    runs-on: warp-ubuntu-latest-x64-2x
+
+    permissions:
+      contents: read # Checkout code
+
+    outputs:
+      matrix: ${{ steps.export-targets.outputs.targets }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Install Just
+        uses: taiki-e/install-action@64c5c20c872907b6f7cd50994ac189e7274160f2 # 2.68.26
+        with:
+          tool: just
+
+      - name: Export targets
+        id: export-targets
+        run: echo "targets=$(just --list | awk '/check-|format-|lint-|test-/{print $1}' | jq -cnR '[inputs]')" >> "$GITHUB_OUTPUT"
+
+  checks:
+    name: ${{ matrix.target }}
+    runs-on: warp-ubuntu-latest-x64-2x
+
+    permissions:
+      contents: read # Checkout code
+
+    needs: targets
+
+    strategy:
+      fail-fast: false
+      matrix:
+        target: ${{ fromJson(needs.targets.outputs.matrix) }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # 6.0.2
+        with:
+          persist-credentials: false
+
+      - name: Install Flox
+        uses: flox/install-flox-action@9428713e8d3883274c334b4b95b8830beebd24d2 # 2.3.0
+        with:
+          # renovate: datasource=github-releases depName=flox/flox
+          version: 1.10.0
+
+      - name: Remove Flox installer (if it exists)
+        run: rm -f flox.x86_64-linux.deb
+
+      - name: Cache Rust artifacts
+        uses: Swatinem/rust-cache@779680da715d629ac1d338a641029a2f4372abb5 # 2.8.2
+        with:
+          prefix-key: "v0-${{ matrix.target }}"
+          cache-on-failure: true
+          cache-provider: "warpbuild"
+
+      - name: Run check with Just
+        uses: flox/activate-action@410568008895a0f2e09a34bbd9523f8ef1f2d292 # 1.1.0
+        with:
+          command: just ${{ matrix.target }}
+
+  success:
+    name: All checks succeeded
+    runs-on: warp-ubuntu-latest-x64-2x
+
+    permissions: {}
+
+    needs: checks
+    if: always()
+
+    steps:
+      - name: Check if all checks succeeded
+        # `needs` is a list of job names, which themselves are generated from
+        # the output of `just --list`, so we ignore the template injection here.
+        # zizmor: ignore[template-injection]
+        run: jq --exit-status 'all(.result == "success")' <<< '${{ toJson(needs) }}'

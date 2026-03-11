@@ -1,0 +1,29 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: ["github>aonyx-ai/renovate-config"],
+
+  "pre-commit": {
+    enabled: true,
+  },
+
+  customManagers: [
+    {
+      customType: "regex",
+      fileMatch: ["\\.github/workflows/.+\\.yml$"],
+      matchStrings: [
+        "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)\\s+version:\\s+(?<currentValue>\\S+)",
+      ],
+    },
+  ],
+
+  packageRules: [
+    {
+      matchPackagePatterns: ["^leptos"],
+      groupName: "Leptos",
+    },
+    {
+      matchPackagePatterns: ["^statig"],
+      groupName: "statig",
+    },
+  ],
+}
