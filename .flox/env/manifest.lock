@@ -38,6 +38,9 @@
           "x86_64-darwin"
         ]
       },
+      "lld": {
+        "pkg-path": "lld"
+      },
       "markdownlint-cli": {
         "pkg-path": "markdownlint-cli"
       },
@@ -65,6 +68,12 @@
       },
       "taplo": {
         "pkg-path": "taplo"
+      },
+      "trunk": {
+        "pkg-path": "trunk"
+      },
+      "wasm-pack": {
+        "pkg-path": "wasm-pack"
       },
       "yamllint": {
         "pkg-path": "yamllint"
@@ -1217,6 +1226,130 @@
       "priority": 5
     },
     {
+      "attr_path": "lld",
+      "broken": false,
+      "derivation": "/nix/store/a35iz04w53rgvxznl49sfbdl5ngs54gd-lld-21.1.8.drv",
+      "description": "LLVM linker (unwrapped)",
+      "install_id": "lld",
+      "license": "[ NCSA, Apache-2.0, LLVM-exception ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=9dcb002ca1690658be4a04645215baea8b95f31d",
+      "name": "lld-21.1.8",
+      "pname": "lld",
+      "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+      "rev_count": 960399,
+      "rev_date": "2026-03-08T09:52:19Z",
+      "scrape_date": "2026-03-10T04:46:55.807750Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "21.1.8",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "dev": "/nix/store/1n9hnnlysg7gm1s4qj57jz9x8jbsgbyr-lld-21.1.8-dev",
+        "lib": "/nix/store/z0z0hp2zs02m5yvnbm7fkygqhkfpvynf-lld-21.1.8-lib",
+        "out": "/nix/store/ngi05wj04dmlh8jlapjh4ndkrf27331i-lld-21.1.8"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "lld",
+      "broken": false,
+      "derivation": "/nix/store/kk3aqkpqp8fa62ss3ws2f4sxpb8z9bcg-lld-21.1.8.drv",
+      "description": "LLVM linker (unwrapped)",
+      "install_id": "lld",
+      "license": "[ NCSA, Apache-2.0, LLVM-exception ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=9dcb002ca1690658be4a04645215baea8b95f31d",
+      "name": "lld-21.1.8",
+      "pname": "lld",
+      "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+      "rev_count": 960399,
+      "rev_date": "2026-03-08T09:52:19Z",
+      "scrape_date": "2026-03-10T05:23:30.170795Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "21.1.8",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "dev": "/nix/store/k9irnjry6pkmilw6kpy4f21dfmwn72xw-lld-21.1.8-dev",
+        "lib": "/nix/store/vqc31fckcs92bs86aqqxi5bzx5847vhn-lld-21.1.8-lib",
+        "out": "/nix/store/86qr1a83p50z4clic8c8pwn8lybrzc2x-lld-21.1.8"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "lld",
+      "broken": false,
+      "derivation": "/nix/store/56bwz3v6x4a8vg94x2sw9dhsksb1x203-lld-21.1.8.drv",
+      "description": "LLVM linker (unwrapped)",
+      "install_id": "lld",
+      "license": "[ NCSA, Apache-2.0, LLVM-exception ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=9dcb002ca1690658be4a04645215baea8b95f31d",
+      "name": "lld-21.1.8",
+      "pname": "lld",
+      "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+      "rev_count": 960399,
+      "rev_date": "2026-03-08T09:52:19Z",
+      "scrape_date": "2026-03-10T06:04:10.655487Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "21.1.8",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "dev": "/nix/store/pnv4pq0v30v0h7cx5y7f4pvzd41i5238-lld-21.1.8-dev",
+        "lib": "/nix/store/7h9gpk4s847k7gyxip3lzpk4r2i4gznb-lld-21.1.8-lib",
+        "out": "/nix/store/lmicy9ip82b5nxarp83nfr7hq61c7qy0-lld-21.1.8"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "lld",
+      "broken": false,
+      "derivation": "/nix/store/g62b4idhci1zc3vfjfcyg97ja3bdwh46-lld-21.1.8.drv",
+      "description": "LLVM linker (unwrapped)",
+      "install_id": "lld",
+      "license": "[ NCSA, Apache-2.0, LLVM-exception ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=9dcb002ca1690658be4a04645215baea8b95f31d",
+      "name": "lld-21.1.8",
+      "pname": "lld",
+      "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+      "rev_count": 960399,
+      "rev_date": "2026-03-08T09:52:19Z",
+      "scrape_date": "2026-03-10T06:47:37.796977Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "21.1.8",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "dev": "/nix/store/r90r1wj900jqknrvbwhzdd91fi32929q-lld-21.1.8-dev",
+        "lib": "/nix/store/v94nchbcr0i0ih6zap3dkc3axh6chq6s-lld-21.1.8-lib",
+        "out": "/nix/store/8pkfxq43pva8va7izw27pjb3qzd00rgb-lld-21.1.8"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
       "attr_path": "markdownlint-cli",
       "broken": false,
       "derivation": "/nix/store/4ic54v9mvb1gmjj2ig4840w4hvb9ivdq-markdownlint-cli-0.48.0.drv",
@@ -1687,6 +1820,238 @@
       ],
       "outputs": {
         "out": "/nix/store/xnyh9bi9wap6m3fq94q6sbav2qhh8f0d-taplo-0.10.0"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "trunk",
+      "broken": false,
+      "derivation": "/nix/store/splfcjpzp91m9vlrr9r5xvrc2cqlrwr3-trunk-0.21.14.drv",
+      "description": "Build, bundle & ship your Rust WASM application to the web",
+      "install_id": "trunk",
+      "license": "[ Apache-2.0 ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=9dcb002ca1690658be4a04645215baea8b95f31d",
+      "name": "trunk-0.21.14",
+      "pname": "trunk",
+      "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+      "rev_count": 960399,
+      "rev_date": "2026-03-08T09:52:19Z",
+      "scrape_date": "2026-03-10T04:48:46.537627Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.21.14",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/61pcb5g5qsazfml4676nyd8s65mysjl9-trunk-0.21.14"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "trunk",
+      "broken": false,
+      "derivation": "/nix/store/q85j1w7cyak89g17q440hgy8a9bx1jc3-trunk-0.21.14.drv",
+      "description": "Build, bundle & ship your Rust WASM application to the web",
+      "install_id": "trunk",
+      "license": "[ Apache-2.0 ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=9dcb002ca1690658be4a04645215baea8b95f31d",
+      "name": "trunk-0.21.14",
+      "pname": "trunk",
+      "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+      "rev_count": 960399,
+      "rev_date": "2026-03-08T09:52:19Z",
+      "scrape_date": "2026-03-10T05:25:59.723445Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.21.14",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/sxvpkdalsqbkm4csvjxbl624yw3d8gfm-trunk-0.21.14"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "trunk",
+      "broken": false,
+      "derivation": "/nix/store/kq7kbsjxpqwwlf4i24fsng4iibfzxhgq-trunk-0.21.14.drv",
+      "description": "Build, bundle & ship your Rust WASM application to the web",
+      "install_id": "trunk",
+      "license": "[ Apache-2.0 ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=9dcb002ca1690658be4a04645215baea8b95f31d",
+      "name": "trunk-0.21.14",
+      "pname": "trunk",
+      "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+      "rev_count": 960399,
+      "rev_date": "2026-03-08T09:52:19Z",
+      "scrape_date": "2026-03-10T06:05:58.384743Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.21.14",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/ncnklrhfl22ys7n66hr1dabw8jqf8c8r-trunk-0.21.14"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "trunk",
+      "broken": false,
+      "derivation": "/nix/store/pmy7b1z1zg35ipmcxkn00hc6b0d59zr2-trunk-0.21.14.drv",
+      "description": "Build, bundle & ship your Rust WASM application to the web",
+      "install_id": "trunk",
+      "license": "[ Apache-2.0 ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=9dcb002ca1690658be4a04645215baea8b95f31d",
+      "name": "trunk-0.21.14",
+      "pname": "trunk",
+      "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+      "rev_count": 960399,
+      "rev_date": "2026-03-08T09:52:19Z",
+      "scrape_date": "2026-03-10T06:50:10.388529Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.21.14",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/fmww9356avy129m75swcpmmk4360xxhi-trunk-0.21.14"
+      },
+      "system": "x86_64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "wasm-pack",
+      "broken": false,
+      "derivation": "/nix/store/afic8qhnv80dd50vjq5l8wnidpbdj4ad-wasm-pack-0.13.1.drv",
+      "description": "Utility that builds rust-generated WebAssembly package",
+      "install_id": "wasm-pack",
+      "license": "[ Apache-2.0, MIT ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=9dcb002ca1690658be4a04645215baea8b95f31d",
+      "name": "wasm-pack-0.13.1",
+      "pname": "wasm-pack",
+      "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+      "rev_count": 960399,
+      "rev_date": "2026-03-08T09:52:19Z",
+      "scrape_date": "2026-03-10T04:49:14.578184Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.13.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/4nc1m1ycrg28j8q5p5kpbgxkaigqhrzp-wasm-pack-0.13.1"
+      },
+      "system": "aarch64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "wasm-pack",
+      "broken": false,
+      "derivation": "/nix/store/ij4yqiw6yrx7k74df4p1fwikins2scwj-wasm-pack-0.13.1.drv",
+      "description": "Utility that builds rust-generated WebAssembly package",
+      "install_id": "wasm-pack",
+      "license": "[ Apache-2.0, MIT ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=9dcb002ca1690658be4a04645215baea8b95f31d",
+      "name": "wasm-pack-0.13.1",
+      "pname": "wasm-pack",
+      "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+      "rev_count": 960399,
+      "rev_date": "2026-03-08T09:52:19Z",
+      "scrape_date": "2026-03-10T05:26:34.328916Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.13.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/d837734jgi9rmx16dbrs0p9jqqxkpmag-wasm-pack-0.13.1"
+      },
+      "system": "aarch64-linux",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "wasm-pack",
+      "broken": false,
+      "derivation": "/nix/store/x5q7ia2jyjsbmsr8sqn77f7py8b74d80-wasm-pack-0.13.1.drv",
+      "description": "Utility that builds rust-generated WebAssembly package",
+      "install_id": "wasm-pack",
+      "license": "[ Apache-2.0, MIT ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=9dcb002ca1690658be4a04645215baea8b95f31d",
+      "name": "wasm-pack-0.13.1",
+      "pname": "wasm-pack",
+      "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+      "rev_count": 960399,
+      "rev_date": "2026-03-08T09:52:19Z",
+      "scrape_date": "2026-03-10T06:06:25.471200Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.13.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/sf8cbxk1ah5vww6r24hbs299ny0azqj6-wasm-pack-0.13.1"
+      },
+      "system": "x86_64-darwin",
+      "group": "toplevel",
+      "priority": 5
+    },
+    {
+      "attr_path": "wasm-pack",
+      "broken": false,
+      "derivation": "/nix/store/22zccq82chgmfsxa10nb1xjbxwy3309l-wasm-pack-0.13.1.drv",
+      "description": "Utility that builds rust-generated WebAssembly package",
+      "install_id": "wasm-pack",
+      "license": "[ Apache-2.0, MIT ]",
+      "locked_url": "https://github.com/flox/nixpkgs?rev=9dcb002ca1690658be4a04645215baea8b95f31d",
+      "name": "wasm-pack-0.13.1",
+      "pname": "wasm-pack",
+      "rev": "9dcb002ca1690658be4a04645215baea8b95f31d",
+      "rev_count": 960399,
+      "rev_date": "2026-03-08T09:52:19Z",
+      "scrape_date": "2026-03-10T06:50:45.140019Z",
+      "stabilities": [
+        "unstable"
+      ],
+      "unfree": false,
+      "version": "0.13.1",
+      "outputs_to_install": [
+        "out"
+      ],
+      "outputs": {
+        "out": "/nix/store/yr6d7vb9mgcv7gjhr5w197kyb28xvbhg-wasm-pack-0.13.1"
       },
       "system": "x86_64-linux",
       "group": "toplevel",

@@ -6,19 +6,52 @@
 //!
 //! # Examples
 //!
+//! Define a state machine with statig's `#[state_machine]` macro, then wrap
+//! it in a [`ReactiveStateMachine`] to get reactive reads and writes:
+//!
 //! ```rust,ignore
 //! use leptos::prelude::*;
 //! use leptos_statig::ReactiveStateMachine;
+//! use statig::prelude::*;
 //!
-//! let fsm = ReactiveStateMachine::new(MyMachine::default());
+//! struct Toggle;
 //!
-//! // Reactive — re-runs when state changes
-//! let current = move || fsm.state();
+//! #[state_machine(initial = "State::off()", state(derive(Clone, Debug)))]
+//! impl Toggle {
+//!     #[state]
+//!     fn off(event: &Event) -> Outcome<State> {
+//!         match event {
+//!             Event::Toggle => Transition(State::on()),
+//!         }
+//!     }
 //!
-//! // Dispatch events to drive transitions
-//! fsm.dispatch(&Event::Toggle);
+//!     #[state]
+//!     fn on(event: &Event) -> Outcome<State> {
+//!         match event {
+//!             Event::Toggle => Transition(State::off()),
+//!         }
+//!     }
+//! }
+//!
+//! enum Event {
+//!     Toggle,
+//! }
+//!
+//! #[component]
+//! fn ToggleButton() -> impl IntoView {
+//!     let fsm = ReactiveStateMachine::new(Toggle);
+//!
+//!     view! {
+//!         <button on:click=move |_| fsm.dispatch(&Event::Toggle)>
+//!             {move || format!("{:?}", fsm.state())}
+//!         </button>
+//!     }
+//! }
 //! ```
 //!
+//! See the [`examples/`][examples] directory for runnable demos.
+//!
+//! [examples]: https://github.com/aonyx-ai/leptos-statig/tree/main/examples
 //! [leptos]: https://docs.rs/leptos
 //! [statig]: https://docs.rs/statig
 
