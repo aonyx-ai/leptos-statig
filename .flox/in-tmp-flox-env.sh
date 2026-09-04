@@ -15,7 +15,9 @@ DIR=/tmp/$ENV
 rm -rf $DIR && mkdir -p $DIR
 git checkout-index -a --prefix=$DIR/
 
-cd $DIR
+# Without this guard a failed copy above would leave the recipe running against
+# the real working tree, which is the one thing this script exists to prevent.
+cd $DIR || exit 1
 
 # The name must be unique, so that Flox treats the copy as a separate
 # environment. We write a new file and move it over the old one instead of
@@ -25,9 +27,14 @@ jq --arg name "$ENV" '.name = $name' .flox/env.json > .flox/env.json.new \
     && mv .flox/env.json.new .flox/env.json
 
 flox activate -- sh -u <$2
+status=$?
 
 # On CI we keep the temporary directory, because the runner is discarded after
 # the job anyway.
-if [[ -z "$CI" ]]; then
+if [[ -z "${CI:-}" ]]; then
     rm -rf $DIR
 fi
+
+# The `if` above is the last command, so without this the script would always
+# exit 0 and the recipe would pass however the body failed.
+exit $status
