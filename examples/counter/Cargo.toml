@@ -1,0 +1,14 @@
+[package]
+name = "counter-example"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+leptos = { version = ">=0.8.3", features = ["csr"] }
+leptos-statig = { path = "../.." }
+statig = ">=0.3.0"
+wasm-bindgen = "0.2"

@@ -22,7 +22,7 @@ pre-commit:
 
 # Check documentation
 check-docs:
-    cargo doc --all-features --no-deps
+    cargo doc --all-features --no-deps -p leptos-statig
 
 # Check latest dependencies with cargo-update
 check-deps-latest:
@@ -92,10 +92,14 @@ lint-yaml:
 prettier fix="false" extension="*":
     prettier {{ if fix == "true" { "--write" } else { "--list-different" } }} --ignore-unknown "**/*.{{ extension }}"
 
+# Serve the counter example app
+serve-counter:
+    cd examples/counter && trunk serve
+
 # Publish crate to crates.io
 publish:
-    cargo publish -v --all-features
+    cargo publish -v --all-features -p leptos-statig
 
 # Run the tests
 test-rust:
-    cargo test --all-targets --all-features
+    cargo test --all-targets --all-features -p leptos-statig
