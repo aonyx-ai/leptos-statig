@@ -14,7 +14,7 @@ concurrency:
 jobs:
   targets:
     name: Enumerate Just recipes
-    runs-on: warp-ubuntu-latest-x64-2x
+    runs-on: ubuntu-latest
 
     permissions:
       contents: read # Checkout code
@@ -39,7 +39,7 @@ jobs:
 
   checks:
     name: ${{ matrix.target }}
-    runs-on: warp-ubuntu-latest-x64-2x
+    runs-on: ubuntu-latest
 
     permissions:
       contents: read # Checkout code
@@ -80,7 +80,7 @@ jobs:
 
   success:
     name: All checks succeeded
-    runs-on: warp-ubuntu-latest-x64-2x
+    runs-on: ubuntu-latest
 
     permissions: {}
 
