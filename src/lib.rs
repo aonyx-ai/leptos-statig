@@ -1,5 +1,4 @@
-//! Reactive wrapper for [statig][statig] state machines in
-//! [Leptos][leptos].
+//! Reactive wrapper for [statig][statig] state machines in [Leptos][leptos]
 //!
 //! Bridges statig's synchronous finite state machines with Leptos reactive
 //! signals, so state transitions automatically trigger UI updates.
@@ -32,6 +31,40 @@ use statig::prelude::{State, Superstate};
 /// and writes notify the reactive graph. Because the wrapper only holds a
 /// signal handle it is both [`Clone`] and [`Copy`].
 ///
+/// # Examples
+///
+/// ```
+/// # use leptos::prelude::*;
+/// # use leptos_statig::ReactiveStateMachine;
+/// # use statig::blocking::Outcome;
+/// # use statig::prelude::*;
+/// # #[derive(Clone, PartialEq, Debug)]
+/// # enum Light { Off, On }
+/// # struct Flip;
+/// # struct Switch { count: u32 }
+/// # impl IntoStateMachine for Switch {
+/// #     type State = Light;
+/// #     type Superstate<'a> = ();
+/// #     type Event<'a> = Flip;
+/// #     type Context<'a> = ();
+/// #     fn initial() -> Light { Light::Off }
+/// # }
+/// # impl State<Switch> for Light {
+/// #     fn call_handler(&mut self, _s: &mut Switch, _e: &Flip, _c: &mut ()) -> Outcome<Self> {
+/// #         match self {
+/// #             Light::Off => Outcome::Transition(Light::On),
+/// #             Light::On => Outcome::Transition(Light::Off),
+/// #         }
+/// #     }
+/// # }
+/// # let owner = Owner::new();
+/// # owner.set();
+/// let fsm = ReactiveStateMachine::new(Switch { count: 0 });
+/// let copy = fsm;
+/// fsm.dispatch(&Flip);
+/// assert_eq!(copy.state(), Light::On);
+/// ```
+///
 /// [`StateMachine<M>`]: statig::blocking::StateMachine
 pub struct ReactiveStateMachine<M>
 where
@@ -49,6 +82,38 @@ where
     for<'a> M::Superstate<'a>: Superstate<M>,
 {
     /// Creates a new reactive state machine, initializing it immediately
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use leptos::prelude::*;
+    /// # use leptos_statig::ReactiveStateMachine;
+    /// # use statig::blocking::Outcome;
+    /// # use statig::prelude::*;
+    /// # #[derive(Clone, PartialEq, Debug)]
+    /// # enum Light { Off, On }
+    /// # struct Flip;
+    /// # struct Switch { count: u32 }
+    /// # impl IntoStateMachine for Switch {
+    /// #     type State = Light;
+    /// #     type Superstate<'a> = ();
+    /// #     type Event<'a> = Flip;
+    /// #     type Context<'a> = ();
+    /// #     fn initial() -> Light { Light::Off }
+    /// # }
+    /// # impl State<Switch> for Light {
+    /// #     fn call_handler(&mut self, _s: &mut Switch, _e: &Flip, _c: &mut ()) -> Outcome<Self> {
+    /// #         match self {
+    /// #             Light::Off => Outcome::Transition(Light::On),
+    /// #             Light::On => Outcome::Transition(Light::Off),
+    /// #         }
+    /// #     }
+    /// # }
+    /// # let owner = Owner::new();
+    /// # owner.set();
+    /// let fsm = ReactiveStateMachine::new(Switch { count: 0 });
+    /// assert_eq!(fsm.state(), Light::Off);
+    /// ```
     pub fn new(machine: M) -> Self {
         Self {
             inner: RwSignal::new(machine.uninitialized_state_machine().init().into()),
@@ -59,6 +124,37 @@ where
     ///
     /// Calling this inside a reactive context (e.g. a component body or
     /// [`Effect`]) subscribes to state changes.
+    /// # Examples
+    ///
+    /// ```
+    /// # use leptos::prelude::*;
+    /// # use leptos_statig::ReactiveStateMachine;
+    /// # use statig::blocking::Outcome;
+    /// # use statig::prelude::*;
+    /// # #[derive(Clone, PartialEq, Debug)]
+    /// # enum Light { Off, On }
+    /// # struct Flip;
+    /// # struct Switch { count: u32 }
+    /// # impl IntoStateMachine for Switch {
+    /// #     type State = Light;
+    /// #     type Superstate<'a> = ();
+    /// #     type Event<'a> = Flip;
+    /// #     type Context<'a> = ();
+    /// #     fn initial() -> Light { Light::Off }
+    /// # }
+    /// # impl State<Switch> for Light {
+    /// #     fn call_handler(&mut self, _s: &mut Switch, _e: &Flip, _c: &mut ()) -> Outcome<Self> {
+    /// #         match self {
+    /// #             Light::Off => Outcome::Transition(Light::On),
+    /// #             Light::On => Outcome::Transition(Light::Off),
+    /// #         }
+    /// #     }
+    /// # }
+    /// # let owner = Owner::new();
+    /// # owner.set();
+    /// let fsm = ReactiveStateMachine::new(Switch { count: 0 });
+    /// assert_eq!(fsm.state(), Light::Off);
+    /// ```
     ///
     /// [`Effect`]: leptos::prelude::Effect
     pub fn state(&self) -> M::State {
@@ -67,8 +163,42 @@ where
 
     /// Dispatches an event, potentially triggering a state transition
     ///
-    /// This is a reactive write — any subscribers of [`state`](Self::state)
-    /// will be notified.
+    /// This is a reactive write. Any subscriber of [`state`] is notified.
+    ///
+    /// [`state`]: Self::state
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use leptos::prelude::*;
+    /// # use leptos_statig::ReactiveStateMachine;
+    /// # use statig::blocking::Outcome;
+    /// # use statig::prelude::*;
+    /// # #[derive(Clone, PartialEq, Debug)]
+    /// # enum Light { Off, On }
+    /// # struct Flip;
+    /// # struct Switch { count: u32 }
+    /// # impl IntoStateMachine for Switch {
+    /// #     type State = Light;
+    /// #     type Superstate<'a> = ();
+    /// #     type Event<'a> = Flip;
+    /// #     type Context<'a> = ();
+    /// #     fn initial() -> Light { Light::Off }
+    /// # }
+    /// # impl State<Switch> for Light {
+    /// #     fn call_handler(&mut self, _s: &mut Switch, _e: &Flip, _c: &mut ()) -> Outcome<Self> {
+    /// #         match self {
+    /// #             Light::Off => Outcome::Transition(Light::On),
+    /// #             Light::On => Outcome::Transition(Light::Off),
+    /// #         }
+    /// #     }
+    /// # }
+    /// # let owner = Owner::new();
+    /// # owner.set();
+    /// let fsm = ReactiveStateMachine::new(Switch { count: 0 });
+    /// fsm.dispatch(&Flip);
+    /// assert_eq!(fsm.state(), Light::On);
+    /// ```
     pub fn dispatch(&self, event: &M::Event<'_>) {
         self.inner.update(|m| {
             m.handle(event);
@@ -76,14 +206,48 @@ where
     }
 
     /// Provides read-only access to the underlying machine data
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// # use leptos::prelude::*;
+    /// # use leptos_statig::ReactiveStateMachine;
+    /// # use statig::blocking::Outcome;
+    /// # use statig::prelude::*;
+    /// # #[derive(Clone, PartialEq, Debug)]
+    /// # enum Light { Off, On }
+    /// # struct Flip;
+    /// # struct Switch { count: u32 }
+    /// # impl IntoStateMachine for Switch {
+    /// #     type State = Light;
+    /// #     type Superstate<'a> = ();
+    /// #     type Event<'a> = Flip;
+    /// #     type Context<'a> = ();
+    /// #     fn initial() -> Light { Light::Off }
+    /// # }
+    /// # impl State<Switch> for Light {
+    /// #     fn call_handler(&mut self, _s: &mut Switch, _e: &Flip, _c: &mut ()) -> Outcome<Self> {
+    /// #         match self {
+    /// #             Light::Off => Outcome::Transition(Light::On),
+    /// #             Light::On => Outcome::Transition(Light::Off),
+    /// #         }
+    /// #     }
+    /// # }
+    /// # let owner = Owner::new();
+    /// # owner.set();
+    /// let fsm = ReactiveStateMachine::new(Switch { count: 42 });
+    /// assert_eq!(fsm.with_inner(|m| m.count), 42);
+    /// ```
     pub fn with_inner<R>(&self, f: impl FnOnce(&M) -> R) -> R {
         self.inner.with(|m| f(m.inner()))
     }
 }
 
-// Manual Clone/Copy impls avoid the `M: Clone`/`M: Copy` bounds that
-// #[derive] would add. RwSignal is Copy regardless of its inner type,
-// so the wrapper should be too.
+/// Clones the handle to the shared signal
+///
+/// A manual impl avoids the `M: Clone` bound that `#[derive]` would add.
+/// [`RwSignal`] is [`Copy`] regardless of its inner type. The wrapper should
+/// be too
 impl<M> Clone for ReactiveStateMachine<M>
 where
     M: IntoStateMachine,
@@ -94,6 +258,9 @@ where
     }
 }
 
+/// Copies the handle to the shared signal
+///
+/// A manual impl avoids the `M: Copy` bound that `#[derive]` would add.
 impl<M> Copy for ReactiveStateMachine<M>
 where
     M: IntoStateMachine,
@@ -104,6 +271,39 @@ where
 /// Provides a [`ReactiveStateMachine<M>`] via Leptos context
 ///
 /// Makes the FSM available to any descendant component via [`use_fsm`].
+///
+/// # Examples
+///
+/// ```
+/// # use leptos::prelude::*;
+/// # use leptos_statig::{provide_fsm, use_fsm};
+/// # use statig::blocking::Outcome;
+/// # use statig::prelude::*;
+/// # #[derive(Clone, PartialEq, Debug)]
+/// # enum Light { Off, On }
+/// # struct Flip;
+/// # struct Switch { count: u32 }
+/// # impl IntoStateMachine for Switch {
+/// #     type State = Light;
+/// #     type Superstate<'a> = ();
+/// #     type Event<'a> = Flip;
+/// #     type Context<'a> = ();
+/// #     fn initial() -> Light { Light::Off }
+/// # }
+/// # impl State<Switch> for Light {
+/// #     fn call_handler(&mut self, _s: &mut Switch, _e: &Flip, _c: &mut ()) -> Outcome<Self> {
+/// #         match self {
+/// #             Light::Off => Outcome::Transition(Light::On),
+/// #             Light::On => Outcome::Transition(Light::Off),
+/// #         }
+/// #     }
+/// # }
+/// # let owner = Owner::new();
+/// # owner.set();
+/// let fsm = provide_fsm(Switch { count: 0 });
+/// assert_eq!(fsm.state(), Light::Off);
+/// assert_eq!(use_fsm::<Switch>().state(), Light::Off);
+/// ```
 ///
 /// [`ReactiveStateMachine<M>`]: ReactiveStateMachine
 pub fn provide_fsm<M>(machine: M) -> ReactiveStateMachine<M>
@@ -125,6 +325,39 @@ where
 /// Panics if no FSM of the matching type was provided by an ancestor
 /// component. See [`provide_fsm`].
 ///
+/// # Examples
+///
+/// ```
+/// # use leptos::prelude::*;
+/// # use leptos_statig::{provide_fsm, use_fsm};
+/// # use statig::blocking::Outcome;
+/// # use statig::prelude::*;
+/// # #[derive(Clone, PartialEq, Debug)]
+/// # enum Light { Off, On }
+/// # struct Flip;
+/// # struct Switch { count: u32 }
+/// # impl IntoStateMachine for Switch {
+/// #     type State = Light;
+/// #     type Superstate<'a> = ();
+/// #     type Event<'a> = Flip;
+/// #     type Context<'a> = ();
+/// #     fn initial() -> Light { Light::Off }
+/// # }
+/// # impl State<Switch> for Light {
+/// #     fn call_handler(&mut self, _s: &mut Switch, _e: &Flip, _c: &mut ()) -> Outcome<Self> {
+/// #         match self {
+/// #             Light::Off => Outcome::Transition(Light::On),
+/// #             Light::On => Outcome::Transition(Light::Off),
+/// #         }
+/// #     }
+/// # }
+/// # let owner = Owner::new();
+/// # owner.set();
+/// provide_fsm(Switch { count: 0 });
+/// let fsm = use_fsm::<Switch>();
+/// assert_eq!(fsm.state(), Light::Off);
+/// ```
+///
 /// [`ReactiveStateMachine<M>`]: ReactiveStateMachine
 pub fn use_fsm<M>() -> ReactiveStateMachine<M>
 where
@@ -141,29 +374,27 @@ mod tests {
     use statig::blocking::Outcome;
 
     #[test]
-    fn trait_send() {
-        fn assert_send<T: Send>() {}
-        assert_send::<ReactiveStateMachine<ToggleMachine>>();
+    fn copy_shares_underlying_signal() {
+        let owner = Owner::new();
+        owner.set();
+
+        let fsm_a = ReactiveStateMachine::new(ToggleMachine { count: 0 });
+        let fsm_b = fsm_a;
+
+        fsm_a.dispatch(&ToggleEvent::Toggle);
+
+        assert_eq!(fsm_b.state(), ToggleState::On);
     }
 
     #[test]
-    fn trait_sync() {
-        fn assert_sync<T: Sync>() {}
-        assert_sync::<ReactiveStateMachine<ToggleMachine>>();
-    }
-
-    #[test]
-    fn trait_unpin() {
-        fn assert_unpin<T: Unpin>() {}
-        assert_unpin::<ReactiveStateMachine<ToggleMachine>>();
-    }
-
-    #[test]
-    fn new_initializes_to_initial_state() {
+    fn dispatch_round_trip_returns_to_original_state() {
         let owner = Owner::new();
         owner.set();
 
         let fsm = ReactiveStateMachine::new(ToggleMachine { count: 0 });
+
+        fsm.dispatch(&ToggleEvent::Toggle);
+        fsm.dispatch(&ToggleEvent::Toggle);
 
         assert_eq!(fsm.state(), ToggleState::Off);
     }
@@ -193,16 +424,31 @@ mod tests {
     }
 
     #[test]
-    fn dispatch_round_trip_returns_to_original_state() {
+    fn new_initializes_to_initial_state() {
         let owner = Owner::new();
         owner.set();
 
         let fsm = ReactiveStateMachine::new(ToggleMachine { count: 0 });
 
-        fsm.dispatch(&ToggleEvent::Toggle);
-        fsm.dispatch(&ToggleEvent::Toggle);
-
         assert_eq!(fsm.state(), ToggleState::Off);
+    }
+
+    #[test]
+    fn trait_send() {
+        fn assert_send<T: Send>() {}
+        assert_send::<ReactiveStateMachine<ToggleMachine>>();
+    }
+
+    #[test]
+    fn trait_sync() {
+        fn assert_sync<T: Sync>() {}
+        assert_sync::<ReactiveStateMachine<ToggleMachine>>();
+    }
+
+    #[test]
+    fn trait_unpin() {
+        fn assert_unpin<T: Unpin>() {}
+        assert_unpin::<ReactiveStateMachine<ToggleMachine>>();
     }
 
     #[test]
@@ -216,21 +462,6 @@ mod tests {
 
         assert_eq!(count, 42);
     }
-
-    #[test]
-    fn copy_shares_underlying_signal() {
-        let owner = Owner::new();
-        owner.set();
-
-        let fsm_a = ReactiveStateMachine::new(ToggleMachine { count: 0 });
-        let fsm_b = fsm_a;
-
-        fsm_a.dispatch(&ToggleEvent::Toggle);
-
-        assert_eq!(fsm_b.state(), ToggleState::On);
-    }
-
-    // -- Test fixtures -------------------------------------------------------
 
     #[derive(Clone, Eq, PartialEq, Debug)]
     enum ToggleState {
